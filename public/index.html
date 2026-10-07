@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ukuraoke</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">Ukuraoke</a>
+    <form id="search">
+      <input name="q" placeholder="Song" required>
+      <input name="artist" placeholder="Artist">
+      <button>Search</button>
+    </form>
+  </header>
+  <main>
+    <section id="results"></section>
+    <section id="song" hidden>
+      <h1 id="title"></h1>
+      <p id="meta"></p>
+      <div class="bar">
+        <button data-source="youtube" class="on">YouTube</button>
+        <button data-source="file">My file</button>
+        <span class="grow"></span>
+        <button id="down">♭</button><span id="key">0</span><button id="up">♯</button>
+        <button id="earlier">−0.5s</button><span id="offset">0.0s</span><button id="later">+0.5s</button>
+        <button id="view">Sheet</button>
+      </div>
+      <div id="youtube-source">
+        <input id="yt-link" placeholder="Paste a YouTube link to use a different video">
+        <div id="yt"></div>
+      </div>
+      <div id="file-source" hidden>
+        <input type="file" id="file" accept="audio/*,video/*">
+        <audio id="audio" controls></audio>
+      </div>
+      <div id="lines"></div>
+      <div id="sheet" hidden></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
