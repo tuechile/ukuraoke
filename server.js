@@ -14,7 +14,11 @@ const need = (params, ...keys) => {
 };
 
 const routes = {
-  "/api/search": (p) => chords.search(...need(p, "q"), p.get("artist") || undefined),
+  "/api/search": (p) => {
+    if (!p.get("q") && !p.get("artist")) throw Object.assign(new Error("missing q or artist"), { status: 400 });
+    return chords.search(p.get("q") || "", p.get("artist") || "");
+  },
+  "/api/shelves": () => chords.shelves(),
   "/api/chords": (p) => chords.sheet(...need(p, "url")),
   "/api/lyrics": (p) => lyrics.find(...need(p, "artist", "track"), p.get("duration")),
   "/api/youtube": (p) => youtube.search(...need(p, "q")),

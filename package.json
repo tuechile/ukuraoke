@@ -9,6 +9,7 @@
     "cli": "node main.js"
   },
   "dependencies": {
+    "got-scraping": "^4.2.1",
     "ultimate-guitar": "^4.0.1"
   }
 }

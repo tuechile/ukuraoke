@@ -4,10 +4,10 @@ const words = (text) =>
   [...text.matchAll(/\S+/g)].map((m) => ({ word: norm(m[0]), start: m.index, end: m.index + m[0].length })).filter((w) => w.word);
 
 const stream = (sheet) =>
-  sheet.sections.flatMap((section) =>
-    section.lines.flatMap((line) => {
+  sheet.sections.flatMap((section, s) =>
+    section.lines.flatMap((line, l) => {
       const ws = words(line.text);
-      const out = ws.map((w) => ({ word: w.word, chords: [] }));
+      const out = ws.map((w) => ({ word: w.word, chords: [], ref: [s, l] }));
       for (const c of line.chords) {
         const i = ws.findIndex((w) => c.at < w.end);
         if (i >= 0) out[i].chords.push(c.chord);
@@ -40,8 +40,8 @@ const merge = (sheet, lines) => {
     if (found.hits < enough) return { ...line, chords: [] };
     cursor = found.start + target.length;
     const chords = target.flatMap((w, i) => (flat[found.start + i]?.chords || []).map((chord) => ({ chord, at: w.start })));
-    return { ...line, chords };
+    return { ...line, chords, sheet: flat[found.start].ref };
   });
 };
 
-module.exports = { merge };
+module.exports = { merge, norm };

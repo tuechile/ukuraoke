@@ -6,9 +6,14 @@ Like hopamchuan.com, but ukulele-first with a cleaner layout: chords sit above t
 
 ## Features
 
-- Search songs and get ukulele chord sheets (falls back to regular chords)
+- Search by song, artist, or both; browse an artist's whole catalog
+- Landing page with trending, beginner-friendly and throwback picks, plus your recently opened songs
+- Ukulele chord sheets first (falls back to regular chords)
 - Time-synced lyrics that follow the music
 - Chords attached to each synced line so you can play along
+- Ukulele chord diagrams above every chord, toggle on or off
+- Autoscroll that follows the music in both karaoke and full-sheet views
+- Transpose
 - Play your own audio file or a YouTube video in the background
 - Offset control to fix lyric drift
 
@@ -31,7 +36,8 @@ The API runs on http://localhost:3000.
 
 | Route | Does |
 | --- | --- |
-| `/api/search?q=&artist=` | Find chord sheets, ukulele first |
+| `/api/search?q=&artist=` | Find songs by title, artist or both, one row per song |
+| `/api/shelves` | Recommendations: trending, beginner, throwback |
 | `/api/chords?url=` | Parsed chord sheet |
 | `/api/lyrics?artist=&track=` | Time-synced lyrics |
 | `/api/youtube?q=` | YouTube videos for background audio |
@@ -43,5 +49,6 @@ The API runs on http://localhost:3000.
 
 1. ~~Backend: search, chords, lyrics, YouTube and merged-song endpoints~~
 2. ~~Chord parsing and alignment with timed lyrics~~
-3. Simple frontend: search, chord sheet view, karaoke view with audio player
-4. Transpose, chord diagrams, caching
+3. ~~Simple frontend: search, chord sheet view, karaoke view with audio player~~
+4. ~~Transpose, chord diagrams, autoscroll~~
+5. Persistent caching, alternate chord voicings

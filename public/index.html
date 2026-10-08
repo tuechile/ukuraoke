@@ -4,21 +4,40 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ukuraoke</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎶</text></svg>">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
     <a href="/" class="logo">Ukuraoke</a>
     <form id="search">
-      <input name="q" placeholder="Song" required>
+      <input name="q" placeholder="Song">
       <input name="artist" placeholder="Artist">
       <button>Search</button>
     </form>
   </header>
   <main>
+    <section id="home" hidden>
+      <div class="hero">
+        <h1>Strum along. Sing along.</h1>
+        <p>Ukulele chords with a diagram over every chord, and lyrics that follow the music.</p>
+        <div class="chips">
+          <a class="chip" href="?artist=Vance+Joy">Vance Joy</a>
+          <a class="chip" href="?artist=Ed+Sheeran">Ed Sheeran</a>
+          <a class="chip" href="?artist=Taylor+Swift">Taylor Swift</a>
+          <a class="chip" href="?artist=Jason+Mraz">Jason Mraz</a>
+          <a class="chip" href="?artist=Bruno+Mars">Bruno Mars</a>
+          <a class="chip" href="?artist=The+Beatles">The Beatles</a>
+          <a class="chip" href="?artist=Billie+Eilish">Billie Eilish</a>
+          <a class="chip" href="?artist=Elvis+Presley">Elvis Presley</a>
+        </div>
+      </div>
+      <div id="shelves"></div>
+    </section>
     <section id="results"></section>
     <section id="song" hidden>
       <h1 id="title"></h1>
+      <a id="by"></a>
       <p id="meta"></p>
       <div class="bar">
         <button data-source="youtube" class="on">YouTube</button>
@@ -26,6 +45,8 @@
         <span class="grow"></span>
         <button id="down">♭</button><span id="key">0</span><button id="up">♯</button>
         <button id="earlier">−0.5s</button><span id="offset">0.0s</span><button id="later">+0.5s</button>
+        <button id="diagrams">Diagrams</button>
+        <button id="autoscroll">Autoscroll</button>
         <button id="view">Sheet</button>
       </div>
       <div id="youtube-source">
@@ -40,6 +61,7 @@
       <div id="sheet" hidden></div>
     </section>
   </main>
+  <script src="uke.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
