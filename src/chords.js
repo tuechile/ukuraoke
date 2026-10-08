@@ -27,6 +27,10 @@ const parseSheet = (text) => {
       sections.push(section);
       continue;
     }
+    if (!section && isChordLine(row)) {
+      section = { name: "", lines: [] };
+      sections.push(section);
+    }
     if (!section) {
       if (row.trim()) header.push(row.trim());
       continue;

@@ -44,4 +44,16 @@ const merge = (sheet, lines) => {
   });
 };
 
-module.exports = { merge, norm };
+const best = (sheet, candidates) => {
+  const scored = candidates.map((lyrics) => {
+    const lines = merge(sheet, lyrics.lines);
+    const words = lines.filter((l) => l.text).length;
+    return { lyrics, lines, ratio: words ? lines.filter((l) => l.chords.length).length / words : 0 };
+  });
+  scored.sort((a, b) => b.ratio - a.ratio);
+  if (scored[0]?.ratio >= 0.25) return scored[0];
+  const trusted = scored.find((s) => s.lyrics.score >= 9);
+  return trusted || null;
+};
+
+module.exports = { merge, best, norm };

@@ -50,17 +50,35 @@
         <button id="view">Sheet</button>
       </div>
       <div id="youtube-source">
-        <input id="yt-link" placeholder="Paste a YouTube link to use a different video">
+        <select id="videos"></select>
+        <input id="yt-link" placeholder="Or paste a YouTube link">
         <div id="yt"></div>
       </div>
       <div id="file-source" hidden>
         <input type="file" id="file" accept="audio/*,video/*">
         <audio id="audio" controls></audio>
       </div>
-      <div id="lines"></div>
-      <div id="sheet" hidden></div>
+      <div class="song-body">
+        <aside id="chordbar">
+          <button id="chordbar-toggle"></button>
+          <div id="chordlist"></div>
+        </aside>
+        <div>
+          <div id="lines"></div>
+          <div id="sheet" hidden></div>
+        </div>
+      </div>
     </section>
   </main>
+  <div id="playbar" hidden>
+    <button id="back" title="Back 5 seconds">−5</button>
+    <button id="play" title="Play or pause (space)">▶</button>
+    <button id="fwd" title="Forward 5 seconds">+5</button>
+    <span id="now">0:00</span>
+    <input type="range" id="seek" min="0" max="1" step="0.1" value="0">
+    <span id="total">0:00</span>
+    <span id="np"></span>
+  </div>
   <script src="uke.js"></script>
   <script src="app.js"></script>
 </body>

@@ -65,5 +65,31 @@ const Uke = (() => {
     return `<svg class="diagram" viewBox="0 0 48 56" role="img" aria-label="${name} ${frets.join("")}">${grid}${nut}${marks}</svg>`;
   };
 
-  return { shape, svg };
+  const OPEN_MIDI = [67, 60, 64, 69];
+  let ctx;
+
+  const pluck = (freq, when) => {
+    const rate = ctx.sampleRate;
+    const period = Math.round(rate / freq);
+    const buffer = ctx.createBuffer(1, Math.floor(rate * 1.6), rate);
+    const d = buffer.getChannelData(0);
+    for (let i = 0; i < period; i++) d[i] = Math.random() * 2 - 1;
+    for (let i = period; i < d.length; i++) d[i] = 0.497 * (d[i - period] + d[i - period + 1]);
+    const src = ctx.createBufferSource();
+    const gain = ctx.createGain();
+    gain.gain.value = 0.25;
+    src.buffer = buffer;
+    src.connect(gain).connect(ctx.destination);
+    src.start(when);
+  };
+
+  const strum = (name) => {
+    const frets = shape(name);
+    if (!frets) return;
+    ctx ??= new AudioContext();
+    ctx.resume();
+    frets.forEach((f, i) => pluck(440 * 2 ** ((OPEN_MIDI[i] + f - 69) / 12), ctx.currentTime + i * 0.035));
+  };
+
+  return { shape, svg, strum };
 })();

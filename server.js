@@ -4,7 +4,7 @@ const path = require("node:path");
 const chords = require("./src/chords");
 const lyrics = require("./src/lyrics");
 const youtube = require("./src/youtube");
-const { merge } = require("./src/merge");
+const { best } = require("./src/merge");
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,8 +24,10 @@ const routes = {
   "/api/youtube": (p) => youtube.search(...need(p, "q")),
   "/api/song": async (p) => {
     const [url, artist, track] = need(p, "url", "artist", "track");
-    const [sheet, found] = await Promise.all([chords.sheet(url), lyrics.find(artist, track, p.get("duration"))]);
-    const video = await youtube.best(artist, track, found?.duration).catch(() => null);
+    const [sheet, list] = await Promise.all([chords.sheet(url), lyrics.candidates(artist, track, p.get("duration")).catch(() => [])]);
+    const match = best(sheet, list);
+    const found = match?.lyrics;
+    const videos = await youtube.pick(artist, track, found?.duration).catch(() => []);
     return {
       artist,
       track,
@@ -33,8 +35,9 @@ const routes = {
       header: sheet.header,
       sections: sheet.sections,
       lyrics: found && { id: found.id, duration: found.duration, synced: found.synced, plain: found.plain },
-      lines: found ? merge(sheet, found.lines) : [],
-      youtube: video,
+      lines: match ? match.lines : [],
+      youtube: videos[0] || null,
+      videos,
     };
   },
 };

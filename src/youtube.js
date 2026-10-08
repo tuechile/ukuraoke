@@ -27,10 +27,16 @@ const search = cache(async (query) => {
   return match ? collect(JSON.parse(match[1]), []).filter((v) => v.duration) : [];
 });
 
-const best = async (artist, track, duration) => {
-  const videos = await search(`${artist} ${track} audio`);
-  if (!duration) return videos[0] || null;
-  return [...videos.slice(0, 8)].sort((a, b) => Math.abs(a.duration - duration) - Math.abs(b.duration - duration))[0] || null;
+const embeddable = async (id) => {
+  const res = await fetch(`https://www.youtube.com/oembed?format=json&url=https://www.youtube.com/watch?v=${id}`).catch(() => null);
+  return !res || res.ok;
 };
 
-module.exports = { search, best };
+const pick = async (artist, track, duration) => {
+  const videos = (await search(`${artist} ${track} audio`)).slice(0, 8);
+  if (duration) videos.sort((a, b) => Math.abs(a.duration - duration) - Math.abs(b.duration - duration));
+  const ok = await Promise.all(videos.map((v) => embeddable(v.id)));
+  return videos.filter((v, i) => ok[i]).slice(0, 5);
+};
+
+module.exports = { search, pick };

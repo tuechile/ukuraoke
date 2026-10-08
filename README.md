@@ -11,10 +11,13 @@ Like hopamchuan.com, but ukulele-first with a cleaner layout: chords sit above t
 - Ukulele chord sheets first (falls back to regular chords)
 - Time-synced lyrics that follow the music
 - Chords attached to each synced line so you can play along
-- Ukulele chord diagrams above every chord, toggle on or off
+- Chords on their own row above the lyrics, with a ukulele diagram over every chord (toggle on or off)
+- Tap any chord to pause the song and hear how it sounds
+- Collapsible chord reference sidebar on the left; opens automatically when inline diagrams are turned off
+- Play bar pinned to the bottom: play/pause, skip, seek
 - Autoscroll that follows the music in both karaoke and full-sheet views
 - Transpose
-- Play your own audio file or a YouTube video in the background
+- Play your own audio file or a YouTube video in the background; skips videos that refuse to embed
 - Offset control to fix lyric drift
 
 ## Data sources
